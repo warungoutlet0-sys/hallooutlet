@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warung Outlet Harry Bin Arba'i - Mie Ayam & Wonton Chili Oil</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#B91C1C',
+                            darkred: '#991B1B',
+                            amber: '#D97706',
+                            gold: '#F59E0B',
+                            dark: '#18181B',
+                            surface: '#27272A',
+                            warmbg: '#FFFBEB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .food-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .food-card-hover:hover {
+            transform: translateY(-6px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #76767d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2f1494;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans antialiased selection:bg-brand-amber selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-brand-dark/90 backdrop-blur-md border-b border-zinc-800 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-red to-brand-amber flex items-center justify-center shadow-lg shadow-brand-red/30 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold text-white text-xl">H</i>
+                    </div>
+                    <div>
+                        <span class="block text-lg font-bold tracking-tight text-white leading-tight">Harry Bin Arba'i</span>
+                        <span class="block text-xs text-brand-gold font-medium tracking-widest uppercase">Outlet Kekinian</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-300">
+                    <a href="#hero" class="hover:text-brand-gold transition-colors">Beranda</a>
+                    <a href="#tentang" class="hover:text-brand-gold transition-colors">Tentang Kami</a>
+                    <a href="#menu" class="hover:text-brand-gold transition-colors">Menu Favorit</a>
+                    <a href="#testimoni" class="hover:text-brand-gold transition-colors">Testimoni</a>
+                    <a href="#lokasi" class="hover:text-brand-gold transition-colors">Kontak & Lokasi</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Cart Button -->
+                    <button id="cart-toggle-btn" onclick="toggleCartModal()" class="relative p-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white transition-all border border-zinc-700">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                        <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-brand-red text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-brand-dark hidden">0</span>
+                    </button>
+
+                    <a href="#menu" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-red to-brand-amber text-white font-semibold text-sm hover:opacity-95 shadow-lg shadow-brand-red/20 transition-all">
+                        <i class="fa-solid fa-utensils text-xs"></i> Pesan Sekarang
+                    </a>
+
+                    <!-- Mobile Menu Toggle Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-zinc-800 bg-brand-dark/95 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-zinc-800 hover:text-white">Beranda</a>
+            <a href="#tentang" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-zinc-800 hover:text-white">Tentang Kami</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-zinc-800 hover:text-white">Menu Favorit</a>
+            <a href="#testimoni" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-zinc-800 hover:text-white">Testimoni</a>
+            <a href="#lokasi" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-zinc-800 hover:text-white">Kontak & Lokasi</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20">
+        <!-- Background Overlay & Accent Pattern -->
+        <div class="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(#2f1494_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-red/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-brand-amber/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Left -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-amber/10 border border-brand-amber/30 text-brand-gold text-xs sm:text-sm font-semibold tracking-wide">
+                        <i class="fa-solid fa-fire text-brand-red"></i> Cita Rasa Otentik & Pedas Mantap
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight font-serif">
+                        Kehangatan & Kelezatan Autentik <span class="bg-gradient-to-r from-brand-gold via-brand-amber to-brand-red bg-clip-text text-transparent">Dalam Setiap Mangkuk</span>
+                    </h1>
+                    
+                    <p class="text-gray-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-normal">
+                        Nikmati racikan istimewa Mie Ayam khas, Mie Ganang gurih pedas, Wonton Chili Oil, serta Dimsum renyah menggugah selera!
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-brand-red to-brand-amber text-white font-bold text-center shadow-lg shadow-brand-red/30 hover:scale-105 transition-all">
+                            <i class="fa-solid fa-bowl-food mr-2"></i> Lihat Menu Kuliner
+                        </a>
+                        <button onclick="toggleCartModal()" class="w-full sm:w-auto px-8 py-4 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-center border border-zinc-700 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i> Pesan via WhatsApp
+                        </button>
+                    </div>
+
+                    <!-- Quick stats badges -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800/80 max-w-md mx-auto lg:mx-0">
+                        <div>
+                            <span class="block text-2xl font-bold text-brand-gold">100%</span>
+                            <span class="text-xs text-gray-400">Halal & Higienis</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-brand-gold">4.9★</span>
+                            <span class="text-xs text-gray-400">Rating Pelanggan</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-brand-gold">Khas</span>
+                            <span class="text-xs text-gray-400">Bumbu Rahasia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner Image Right -->
+                <div class="relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-zinc-800/80 bg-zinc-900 group">
+                            <img src="poster.jpg.jpeg" alt="Mie Ayam Spesial Harry Bin Arba'i" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <!-- Floating Badge 1 -->
+                        <div class="absolute -bottom-6 -left-6 bg-zinc-900/90 backdrop-blur-md p-4 rounded-2xl border border-zinc-700 shadow-xl flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-red/20 text-brand-red flex items-center justify-center">
+                                <i class="fa-solid fa-pepper-hot text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Spesialis</p>
+                                <p class="text-sm font-bold text-white">Chili Oil Homemade</p>
+                            </div>
+                        </div>
+                        <!-- Floating Badge 2 -->
+                        <div class="absolute -top-6 -right-6 bg-zinc-900/90 backdrop-blur-md p-4 rounded-2xl border border-zinc-700 shadow-xl flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center">
+                                <i class="fa-solid fa-face-smile-beam text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Harga terjangkau</p>
+                                <p class="text-sm font-bold text-white">Mulai Rp 1.000-18.000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="py-20 bg-zinc-900/60 border-y border-zinc-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=500&q=80" class="rounded-2xl object-cover h-64 w-full border border-zinc-800 shadow-lg" alt="Dimsum Goreng Krispi">
+                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=500&q=80" class="rounded-2xl object-cover h-64 w-full border border-zinc-800 shadow-lg mt-8" alt="Wonton Pangsit">
+                </div>
+                <div class="space-y-6">
+                    <span class="text-brand-gold text-sm font-bold uppercase tracking-widest">Cerita Dapur Kami</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Warung Outlet Harry Bin Arba'i</h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Didekasikan untuk menyajikan makanan kekinian dengan harga yang terjangkau. Kami mengolah setiap porsi <strong>Mie Ayam</strong>, <strong>Mie Ganang</strong> pedas khas, <strong>Wonton Pangsit Chili Oil</strong> berempah, hingga <strong>Dimsum Goreng Krispi</strong> menggunakan bahan-bahan segar berkualitas tinggi dan resep bumbu rahasia keluarga.
+                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Sensasi gurih, pedas nikmat, dan aroma khas minyak cabai rempah kami dijamin membuat lidah bergoyang dan ketagihan. Kami selalu berkomitmen menjaga mutu dan rasa agar setiap pelanggan menikmati hidangan hangat nan memuaskan!
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-zinc-800/60 border border-zinc-700/50">
+                            <i class="fa-solid fa-leaf text-emerald-400 text-xl mb-2"></i>
+                            <h3 class="font-semibold text-white text-sm">Bahan Segar Pilihan</h3>
+                            <p class="text-xs text-gray-400 mt-1">Dibuat setiap hari tanpa pengawet buatan.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-zinc-800/60 border border-zinc-700/50">
+                            <i class="fa-solid fa-fire-burner text-brand-amber text-xl mb-2"></i>
+                            <h3 class="font-semibold text-white text-sm">Resep Otentik</h3>
+                            <p class="text-xs text-gray-400 mt-1">Paduan bumbu khas kaya rempah nusantara.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Menu Section -->
+    <section id="menu" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-amber text-sm font-bold uppercase tracking-widest">Pilihan Spesial</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white mt-1">Menu Kuliner Favorit</h2>
+                <p class="text-gray-400 mt-2">Pilih menu favorit Anda dan klik "Tambah" untuk memesan secara mudah melalui WhatsApp!</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-10">
+                <button onclick="filterMenu('all')" class="menu-tab-btn active px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-brand-amber text-white shadow-md shadow-brand-amber/20" data-category="all">
+                    <i class="fa-solid fa-border-all mr-1.5"></i> Semua Menu
+                </button>
+                <button onclick="filterMenu('makanan')" class="menu-tab-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition-all" data-category="makanan">
+                    <i class="fa-solid fa-bowl-rice mr-1.5"></i> Makanan Utama
+                </button>
+                <button onclick="filterMenu('camilan')" class="menu-tab-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition-all" data-category="camilan">
+                    <i class="fa-solid fa-dumpling mr-1.5"></i> Dimsum & Wonton (pangsit)
+                </button>
+                <button onclick="filterMenu('minuman')" class="menu-tab-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition-all" data-category="minuman">
+                    <i class="fa-solid fa-glass-water mr-1.5"></i> Minuman Segar
+                </button>
+                <button onclick="filterMenu('Gorengan')" class="menu-tab-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition-all" data-category="minuman">
+                    <i class="fa-solid fa-glass-water mr-1.5"></i> Gorengan
+            </div>
+
+            <!-- Menu Grid Container -->
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will dynamically render items or HTML elements filtered -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimoni" class="py-20 bg-zinc-900/70 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-brand-gold text-sm font-bold uppercase tracking-widest">Pendapat Pelanggan</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white mt-1">Kata Mereka Yang Sudah Coba</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 relative">
+                    <div class="flex items-center gap-1 text-brand-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-sm italic mb-6">"Mie Ganangnya beneran nagih! Pedas gurihnya pas banget di lidah, bumbu dagingnya melimpah. Wonton Chili Oil-nya juga juara!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-red flex items-center justify-center font-bold text-white text-sm">R</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Nabila Anil</h4>
+                            <p class="text-xs text-gray-400">Pencinta Culinary Pedas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 relative">
+                    <div class="flex items-center gap-1 text-brand-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-sm italic mb-6">"Mie Ayam Spesial harga 15rb dapetnya lengkap banget. Kuahnya gurih bening, ayam manis gurihnya pas. Pokoknya warung favorit keluarga."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-amber flex items-center justify-center font-bold text-white text-sm">S</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Aulya</h4>
+                            <p class="text-xs text-gray-400">Pelanggan Setia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-800/80 border border-zinc-700/60 relative">
+                    <div class="flex items-center gap-1 text-brand-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-sm italic mb-6">"Dimsum goreng krispi dan kejunya lumer cocok banget buat cemilan sore bareng Es Teh Tarik dingin. Pengiriman pesanan lewat WA juga super cepat!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-sm">A</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Nurr</h4>
+                            <p class="text-xs text-gray-400">Foodie Local</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="lokasi" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-brand-gold text-sm font-bold uppercase tracking-widest">Kunjungi Outlet Kami</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Informasi & Lokasi Warung</h2>
+                    <p class="text-gray-300">
+                        Datang langsung ke outlet kami untuk menikmati sajian panas segar dari mangkuk, atau pesan antar (Delivery) untuk wilayah sekitar!
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-zinc-900 border border-zinc-800">
+                            <div class="w-10 h-10 rounded-xl bg-brand-red/20 text-brand-red flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Alamat Outlet</h4>
+                                <p class="text-sm text-gray-400 mt-1">kecamatan.Perbaugan Desa Melati II (dsn) nangka</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-zinc-900 border border-zinc-800">
+                            <div class="w-10 h-10 rounded-xl bg-brand-amber/20 text-brand-amber flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-clock text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Jam Operasional</h4>
+                                <p class="text-sm text-gray-400 mt-1">Buka Setiap Hari: 14.00 WIB - 17.00 WIB</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-zinc-900 border border-zinc-800">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Layanan Pesanan / WA</h4>
+                                <p class="text-sm text-gray-400 mt-1">+62 82291441675 (Customer Service / Order)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps Placeholder / Card -->
+                <div class="rounded-3xl border border-zinc-800 overflow-hidden bg-zinc-900 h-96 relative flex items-center justify-center text-center p-6 shadow-2xl">
+                    <div class="space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-brand-amber/20 text-brand-gold flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Map Outlet Harry Bin Arba'i</h3>
+                        <p class="text-sm text-gray-400 max-w-xs mx-auto">Klik tombol di bawah untuk membuka peta lokasi di Google Maps secara langsung.</p>
+                        <a href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-amber text-white font-semibold text-sm hover:bg-brand-gold transition-colors">
+                            <i class="fa-solid fa-directions"></i> Buka Peta Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-zinc-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Warung Outlet Harry Bin Arba'i</h3>
+                    <p class="text-xs text-gray-500 mt-1">© 2026 Outlet Harry Bin Arba'i. Hak Cipta Dilindungi.</p>
+                </div>
+                <div class="flex items-center gap-6 text-gray-400">
+                    <a href="#" class="hover:text-brand-gold transition-colors text-xl"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-brand-gold transition-colors text-xl"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="hover:text-brand-gold transition-colors text-xl"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-brand-gold transition-colors text-xl"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Floating Bar (Mobile & Quick Access) -->
+    <div id="floating-cart-bar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 w-11/12 max-w-lg bg-zinc-900/95 border border-zinc-700 backdrop-blur-md rounded-full shadow-2xl p-3 px-5 flex items-center justify-between hidden">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-amber text-white flex items-center justify-center font-bold text-sm">
+                <span id="floating-cart-count">0</span>
+            </div>
+            <div>
+                <span class="block text-xs text-gray-400">Total Pesanan:</span>
+                <span id="floating-cart-total" class="font-bold text-white text-sm">Rp 0</span>
+            </div>
+        </div>
+        <button onclick="toggleCartModal()" class="px-5 py-2 rounded-full bg-gradient-to-r from-brand-red to-brand-amber text-white font-bold text-xs sm:text-sm hover:opacity-90">
+            Lihat Keranjang <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+    </div>
+
+    <!-- Order Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-zinc-800 flex items-center justify-between bg-zinc-800/50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-brand-amber text-xl"></i>
+                    <h3 class="text-lg font-bold text-white">Keranjang Pesanan</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body / Cart Items -->
+            <div id="cart-items-container" class="p-5 overflow-y-auto space-y-4 flex-1">
+                <!-- Cart items inserted by JavaScript -->
+            </div>
+
+            <!-- Modal Form Options -->
+            <div class="p-5 border-t border-zinc-800 bg-zinc-950/60 space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Nama Pemesan</label>
+                        <input type="text" id="order-name" placeholder="Nama Anda" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-amber">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Jenis Layanan</label>
+                        <select id="order-type" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-amber">
+                            <option value="Dine-In / Makan di Tempat">Makan di Tempat (Dine-In)</option>
+                            <option value="Take-Away / Bungkus">Bungkus (Take-Away)</option>
+                            <option value="Delivery / Pesan Antar">Pesan Antar (Delivery)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Catatan Tambahan (cth: Level Pedas, Es Sedikit)</label>
+                    <input type="text" id="order-note" placeholder="cth: Mie Ganang Pedas Level 3, Wonton Goreng" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-amber">
+                </div>
+
+                <!-- Total Cost Summary -->
+                <div class="flex items-center justify-between pt-2 border-t border-zinc-800">
+                    <span class="text-gray-400 text-sm">Total Pembayaran:</span>
+                    <span id="modal-cart-total" class="text-xl font-extrabold text-brand-gold">Rp 0</span>
+                </div>
+
+                <!-- Send via WhatsApp Action -->
+                <button onclick="sendWhatsAppOrder()" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Kirim Pesanan via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-24 right-4 z-50 bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 transform translate-x-full transition-transform duration-300">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toast-message" class="text-sm font-semibold">Menu berhasil ditambahkan!</span>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // Menu Data List
+        const menuData = [
+            {
+                id: 1,
+                name: "Mie Ayam Spesial",
+                category: "makanan",
+                price: 15000,
+                description: "Mie kenyal khas disajikan dengan topping ayam semur gurih manis, kuah kaldu terpisah, topping bakso & pangsit renyah.",
+                badge: "Best Seller",
+                badgeColor: "bg-brand-red",
+                image: "https://id.pinterest.com/pin/715298353347933738/"
+            },
+            {
+                id: 2,
+                name: "Mie Ganang Spesial",
+                category: "makanan",
+                price: 18000,
+                description: "Mie racikan pedas gurih ala Harry Bin Arba'i dengan olahan bumbu daging cincang pedas spesial & taburan daun bawang segar.",
+                badge: "Super Pedas",
+                badgeColor: "bg-brand-amber",
+                image: "https://id.pinterest.com/pin/1147503180044477020/"
+            },
+            {
+                id: 3,
+                name: "Wonton (Pangsit) Chili Oil",
+                category: "camilan",
+                price: 12000,
+                description: "Pangsit lembut isi daging ayam juicy disiram racikan minyak cabai (Chili Oil) rempah khas warung yang aromatik.",
+                badge: "Favorit",
+                badgeColor: "bg-red-600",
+                image: "https://id.pinterest.com/pin/823314375660363158/"
+            },
+            {
+                id: 4,
+                name: "Dimsum Goreng Krispi",
+                category: "camilan",
+                price: 12000,
+                description: "Dimsum olahan isi ayam & udang yang digoreng garing di luar dan lembut di dalam. Disajikan dengan saus dip pedas manis.",
+                badge: "Renyah",
+                badgeColor: "bg-yellow-600",
+                image: "https://id.pinterest.com/pin/963488914059687624/"
+            },
+            {
+                id: 5,
+                name: "Gorengan",
+                category: "camilan",
+                price: 6000,
+                description: "gorengan dengan berbagai macam jenis,Disajikan masih hangat.",
+                badge: "Renyah",
+                badgeColor: "bg-emerald-600",
+                image: "https://id.pinterest.com/pin/194288171416922061/"
+            },
+            {
+                id: 6,
+                name: "Cappucino Dingin+susu",
+                category: "minuman",
+                price: 8000,
+                description: "Minuman perpaduan antara cappucino + susu adalah minuman yang cocok untuk makan pendamping mie ayam.",
+                badge: "Rekomendasi",
+                badgeColor: "bg-blue-600",
+                image: "https://id.pinterest.com/pin/1110841064349039259/"
+            },
+            {
+                id: 7,
+                name: "Es Teh Manis",
+                category: "minuman",
+                price: 3000,
+                description: "Teh celup manis dingin klasik pekat aroma melati.",
+                badge: "Hemat",
+                badgeColor: "bg-gray-600",
+                image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 8,
+                name: "Es Jeruk Peras Segar",
+                category: "minuman",
+                price: 5000,
+                description: "Perasan buah jeruk asli manis asam menyegarkan.",
+                badge: "Alami",
+                badgeColor: "bg-orange-500",
+                image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // Cart State
+        let cart = [];
+
+        // Render Menu Items
+        function renderMenu(category = 'all') {
+            const menuGrid = document.getElementById('menu-grid');
+            menuGrid.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? menuData 
+                : menuData.filter(item => item.category === category);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-xl food-card-hover flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-zinc-800">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 ${item.badgeColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                                ${item.badge}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <h3 class="text-xl font-bold text-white leading-snug">${item.name}</h3>
+                                <span class="text-brand-gold font-bold text-lg whitespace-nowrap">Rp ${item.price.toLocaleString('id-ID')}</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">${item.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="addToCart(${item.id})" class="w-full py-3 rounded-2xl bg-zinc-800 hover:bg-brand-amber text-white font-semibold text-sm transition-all border border-zinc-700 hover:border-brand-amber flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i> Tambah Ke Pesanan
+                        </button>
+                    </div>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        // Filter Function
+        function filterMenu(cat) {
+            document.querySelectorAll('.menu-tab-btn').forEach(btn => {
+                if (btn.dataset.category === cat) {
+                    btn.className = 'menu-tab-btn active px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-brand-amber text-white shadow-md shadow-brand-amber/20';
+                } else {
+                    btn.className = 'menu-tab-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-zinc-800 text-gray-300 hover:bg-zinc-700 transition-all';
+                }
+            });
+            renderMenu(cat);
+        }
+
+        // Cart Actions
+        function addToCart(id) {
+            const item = menuData.find(m => m.id === id);
+            const existing = cart.find(c => c.id === id);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${item.name}" ditambahkan ke keranjang!`);
+        }
+
+        function updateQuantity(id, change) {
+            const index = cart.findIndex(c => c.id === id);
+            if (index !== -1) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Badges & Floating bar
+            const badge = document.getElementById('cart-count-badge');
+            const floatingBar = document.getElementById('floating-cart-bar');
+            const floatingCount = document.getElementById('floating-cart-count');
+            const floatingTotal = document.getElementById('floating-cart-total');
+            const modalTotal = document.getElementById('modal-cart-total');
+
+            if (totalCount > 0) {
+                badge.innerText = totalCount;
+                badge.classList.remove('hidden');
+                floatingBar.classList.remove('hidden');
+                floatingCount.innerText = totalCount;
+                floatingTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+            } else {
+                badge.classList.add('hidden');
+                floatingBar.classList.add('hidden');
+            }
+
+            modalTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+
+            // Render Cart Modal Items
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3"></i>
+                        <p class="text-sm">Keranjang pesanan masih kosong.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between bg-zinc-800/60 p-3 rounded-2xl border border-zinc-700/50">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover" alt="${item.name}">
+                            <div>
+                                <h4 class="font-bold text-white text-sm leading-tight">${item.name}</h4>
+                                <span class="text-xs text-brand-gold">Rp ${item.price.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-zinc-900 px-3 py-1.5 rounded-xl border border-zinc-700">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-400 hover:text-white font-bold text-sm">-</button>
+                            <span class="text-white text-sm font-semibold">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="text-gray-400 hover:text-white font-bold text-sm">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Toggle Cart Modal
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-2xl';
+            } else {
+                icon.className = 'fa-solid fa-xmark text-2xl';
+            }
+        }
+
+        // Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 2500);
+        }
+
+        // Send Order via WhatsApp Direct URL
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert('Keranjang Anda masih kosong. Silakan pilih menu terlebih dahulu!');
+                return;
+            }
+
+            const name = document.getElementById('order-name').value.trim() || 'Pelanggan';
+            const type = document.getElementById('order-type').value;
+            const note = document.getElementById('order-note').value.trim();
+
+            let message = `Halo Warung Outlet Harry Bin Arba'i, Saya ingin memesan:\n\n`;
+            message += `👤 *Nama Pemesan:* ${name}\n`;
+            message += `🍽️ *Layanan:* ${type}\n\n`;
+            message += `📋 *Rincian Pesanan:*\n`;
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                message += `• ${item.name} x${item.quantity} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+            });
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += `\n💰 *Total Pembayaran:* Rp ${totalPrice.toLocaleString('id-ID')}\n`;
+
+            if (note) {
+                message += `📝 *Catatan Tambahan:* ${note}\n`;
+            }
+
+            message += `\nMohon diproses ya, Terima kasih!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const waNumber = "6281234567890"; // WhatsApp number
+            window.open(`https://wa.me/${waNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Initialize Page
+        window.onload = function() {
+            renderMenu('all');
+        }
+    </script>
+</body>
+</html>
